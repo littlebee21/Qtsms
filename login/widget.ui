@@ -13,7 +13,7 @@
   <property name="windowTitle">
    <string>Widget</string>
   </property>
-  <widget class="QLineEdit" name="userNameLineEdit">
+  <widget class="QLineEdit" name="lineEdit">
    <property name="geometry">
     <rect>
      <x>130</x>
@@ -23,7 +23,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QLineEdit" name="passwordLineEdit">
+  <widget class="QLineEdit" name="lineEdit_2">
    <property name="geometry">
     <rect>
      <x>130</x>
@@ -33,7 +33,7 @@
     </rect>
    </property>
   </widget>
-  <widget class="QPushButton" name="loginPushButton">
+  <widget class="QPushButton" name="pushButton">
    <property name="geometry">
     <rect>
      <x>220</x>
@@ -46,7 +46,7 @@
     <string>登录</string>
    </property>
   </widget>
-  <widget class="QLabel" name="loginResultLabel">
+  <widget class="QLabel" name="label">
    <property name="geometry">
     <rect>
      <x>30</x>
@@ -59,7 +59,7 @@
     <string>TextLabel</string>
    </property>
   </widget>
-  <widget class="QLabel" name="constLoginLabel">
+  <widget class="QLabel" name="label_2">
    <property name="geometry">
     <rect>
      <x>180</x>

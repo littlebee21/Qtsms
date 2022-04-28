@@ -14,6 +14,8 @@ class Widget : public QWidget
 public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
+public  slots:
+    void slotLogin();//登录
 
 private:
     Ui::Widget *ui;
