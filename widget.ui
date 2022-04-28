@@ -51,8 +51,8 @@
     <rect>
      <x>30</x>
      <y>300</y>
-     <width>54</width>
-     <height>12</height>
+     <width>81</width>
+     <height>16</height>
     </rect>
    </property>
    <property name="text">
@@ -70,6 +70,19 @@
    </property>
    <property name="text">
     <string>用户登录</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="initDataBasePushButton">
+   <property name="geometry">
+    <rect>
+     <x>304</x>
+     <y>290</y>
+     <width>111</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>initDataBase</string>
    </property>
   </widget>
  </widget>

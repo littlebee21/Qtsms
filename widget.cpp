@@ -9,7 +9,10 @@ Widget::Widget(QWidget *parent)
     , ui(new Ui::Widget)
 {
     ui->setupUi(this);
+    pMyDataBase = new MyDataBase;
 
+
+    //建立连接
     connect(ui->loginPushButton,&QAbstractButton::clicked,
                this,&Widget::slotLogin);
 }
