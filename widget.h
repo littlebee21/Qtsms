@@ -3,6 +3,8 @@
 
 #include <QWidget>
 #include "mydatabase.h"
+#include "datashowwidget.h"
+#include "QStackedWidget"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Widget; }
@@ -15,11 +17,16 @@ class Widget : public QWidget
 public:
     Widget(QWidget *parent = nullptr);
     ~Widget();
+    void switchDataShowWidget();
+
 public  slots:
     void slotLogin();//登录
 
 private:
     Ui::Widget *ui;
     MyDataBase *pMyDataBase;
+    DataShowWidget *pDataShowWidget;
+
+    QStackedWidget *pQStackedWidget; //多层显示界面
 };
 #endif // WIDGET_H

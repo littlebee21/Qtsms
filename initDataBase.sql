@@ -1,146 +1,152 @@
-create database StudentInfoManagement;
-use StudentInfoManagement;
-#建表
+/*
+Navicat MySQL Data Transfer
 
-#院系表
-create table Department(
-Dno char(12),
-Dname char(12),
-constraint primary key PK_Department (Dno)
-);
-#班级表
-create table Class(
-Clno char(12),
-Clname char(12),
-Dno char(12),
-constraint primary key PK_Class (Clno),
-constraint foreign key FK_Class_Department (Dno) references Department(Dno)
-);
-#学生表
-create table Student(
-Sno char(12),
-Sname char(8),
-Ssex char(2) check(Ssex in ('男','女')),
-Sage smallint check(Sage > 0),
-Clno char(12),
-constraint primary key PK_Student (Sno),
-constraint foreign key FK_Student_Class (Clno) references Class(Clno)
-);
-#课程表
-create table Course(
-Cno char(12),
-Cname char(12),
-Cteacher char(8),
-Ccredit smallint check(Ccredit > 0),
-constraint primary key PK_Course (Cno)
-);
-#选课表
-create table SC(
-Sno char(12),
-Cno char(12),
-Grade smallint check(Grade < 100 and Grade > 0),
-constraint foreign key FK_SC_Student (Sno) references Student(Sno),
-constraint foreign key FK_SC_Course (Cno) references Course(Cno),
-constraint primary key PK_SC (Sno,Cno)
-);
-#用户表
-create table User(
-username char(12),
-password char(12) not null,
-level char(6) check(level in ('用户','管理员')),
-constraint primary key PK_User (username)
+Source Server         : 3232
+Source Server Version : 50527
+Source Host           : localhost:3306
+Source Database       : studentmanager
+
+Target Server Type    : MYSQL
+Target Server Version : 50527
+File Encoding         : 65001
+
+Date: 2017-08-03 11:50:08
+*/
+
+-- ----------------------------
+-- Table structure for admin
+-- ----------------------------
+DROP TABLE IF EXISTS `admin`;
+CREATE TABLE `admin` (
+  `id` int(11) NOT NULL DEFAULT '0',
+  `username` text,
+  `password` text,
+  PRIMARY KEY (`id`)
 );
 
+-- ----------------------------
+-- Records of admin
+-- ----------------------------
+INSERT INTO `admin` VALUES ('1', 'admin', 'admin');
+INSERT INTO `admin` VALUES ('2', 'admin2', 'admin2');
+INSERT INTO `admin` VALUES ('4', '陈永喆', '5251');
 
-#插入测试数据
-insert into department
-values('201501','软件学院');
-insert into department
-values('201502','经管学院');
-insert into department
-values('201503','人文学院');
-insert into department
-values('201504','国际学院');
-insert into department
-values('201505','理学院');
+-- ----------------------------
+-- Table structure for class
+-- ----------------------------
+DROP TABLE IF EXISTS `class`;
+CREATE TABLE `class` (
+  `classid` int(11) DEFAULT NULL,
+  `classname` text,
+  `major` text,
+  `membernum` int(11) DEFAULT NULL,
+  `instructor` text
+);
 
-insert into class
-values('20150103','2015-3班','201501');#软件学院
-insert into class
-values('20150104','2015-4班','201501');#软件学院
-insert into class
-values('20150201','2015-1班','201502');#经管学院
-insert into class
-values('20150202','2015-2班','201502');#经管学院
-insert into class
-values('20150301','2015-1班','201503');#人文学院
-insert into class
-values('20150302','2015-2班','201503');#人文学院
+-- ----------------------------
+-- Records of class
+-- ----------------------------
+INSERT INTO `class` VALUES ('101', '信安163班', '信息安全', '29', '刘凌峰');
+INSERT INTO `class` VALUES ('102', '信安161班', '信息安全', '30', '戴萌');
+INSERT INTO `class` VALUES ('103', '软工165班', '软件工程', '30', '黄安');
 
-insert into student
-values('2015010312','张明','男',20,'20150103');
-insert into student
-values('2015010313','秦羽','女',19,'20150103');
-insert into student
-values('2015010314','刘翔','男',19,'20150103');
+-- ----------------------------
+-- Table structure for course
+-- ----------------------------
+DROP TABLE IF EXISTS `course`;
+CREATE TABLE `course` (
+  `id` int(11) NOT NULL DEFAULT '0',
+  `object` text,
+  `teacher` text,
+  `coursetime` text,
+  `courseaddress` text,
+  `period` text,
+  `credit` text,
+  PRIMARY KEY (`id`)
+);
 
-insert into course
-values('1','高等数学','张三',4);
-insert into course
-values('2','数据库原理设计','李四',3);
-insert into course
-values('3','Java程序设计','王五',4);
+-- ----------------------------
+-- Records of course
+-- ----------------------------
+INSERT INTO `course` VALUES ('101', '大物', '黄国庆', '大一下', '软件楼102教室', '56', '4');
+INSERT INTO `course` VALUES ('102', '高数', '陈春芳', '大一上', '软件楼307教室', '64', '5');
+INSERT INTO `course` VALUES ('103', 'c语言', '刘伯成', '大一上', '软件楼109教室', '64', '3');
+INSERT INTO `course` VALUES ('105', 'C++', '刘伯成', '大一下', '软件楼103教室', '56', '4');
 
-insert into SC
-values('2015010312','1',50);
-insert into SC
-values('2015010312','2',80);
-insert into SC
-values('2015010312','3',70);
-insert into SC
-values('2015010313','1',90);
-insert into SC
-values('2015010313','2',89);
-insert into SC
-values('2015010313','3',59);
-insert into SC
-values('2015010314','1',85);
-insert into SC
-values('2015010314','2',75);
-insert into SC
-values('2015010314','3',95);
+-- ----------------------------
+-- Table structure for fee
+-- ----------------------------
+DROP TABLE IF EXISTS `fee`;
+CREATE TABLE `fee` (
+  `id` bigint(20) DEFAULT NULL,
+  `name` text,
+  `banji` text,
+  `major` text,
+  `term` text,
+  `fee` text,
+  `arrearage` text
+);
 
-insert into user
-values('admin','666','管理员');
-insert into user
-values('user','123','用户');
+-- ----------------------------
+-- Records of fee
+-- ----------------------------
+INSERT INTO `fee` VALUES ('8001716066', '陈永喆', '信安163班', '信息安全', '大一下', '10000元', '0元');
+INSERT INTO `fee` VALUES ('1008', '张勇', '网工162班', '网络工程', '大一上', '5550元', '0元');
+INSERT INTO `fee` VALUES ('1000', '张三', '计科162班', '计算机科学与技术', '大一下', '5550元', '0元');
 
-#查询示例
+-- ----------------------------
+-- Table structure for score
+-- ----------------------------
+DROP TABLE IF EXISTS `score`;
+CREATE TABLE `score` (
+  `id` bigint(20) DEFAULT NULL,
+  `time` text,
+  `object` text,
+  `score` text,
+  `banji` text,
+  `teacher` text
+);
 
-##查询所有课程平均分
-#select sc.cno cno,cname,avg(grade) avg 
-#from course,sc 
-#where course.cno = sc.cno 
-#group by cno 
-#order by cno;
-#
-##查询全部课程不及格率
-#select cno,(select cname from course where cno = x.cno) cname,
-#cast(100.0*(select count(sno) from sc where grade < 60 and cno = x.cno)/(select count(sno) from sc where cno = x.cno) as decimal(18,2)) rate 
-#from sc x 
-#group by cno;
-#
-##查选修某一门课程的总人数
-#select cno,count(Sno) 总人数
-#from SC
-#group by Cno
-#having Cno = '1';
-#
-##查询某一门课程的全部成绩排名
-#select cno,student.Sno,Dname,Clname,Sname,Ssex,Sage,grade
-#from department,class,student,sc
-#where student.sno = sc.sno
-#and class.Clno = student.Clno
-#and department.Dno = class.Dno
-#and cno = '1'
-#order by grade desc;
+-- ----------------------------
+-- Records of score
+-- ----------------------------
+INSERT INTO `score` VALUES ('1008', '大一下', '大物', '%0', '%1', '%2');
+INSERT INTO `score` VALUES ('1000', '大一上', '高数', '81', '162', '张老师');
+INSERT INTO `score` VALUES ('8001716066', '大一上', '高数', '89', '163', '陈春芳');
+INSERT INTO `score` VALUES ('8001716066', '大一下', '高数', '100', '163', '陈春芳');
+INSERT INTO `score` VALUES ('8001716066', '大一下', '大物', '83', '163', '黄国庆');
+INSERT INTO `score` VALUES ('122322', '大一下', '大物', '98', '163', '王明');
+INSERT INTO `score` VALUES ('100123', '大一下', '大物', '98', '163', '王明');
+INSERT INTO `score` VALUES ('12122', '32324', '3232', '343', '344', '43');
+
+-- ----------------------------
+-- Table structure for student
+-- ----------------------------
+DROP TABLE IF EXISTS `student`;
+CREATE TABLE `student` (
+  `id` bigint(11) NOT NULL,
+  `name` text,
+  `sex` text,
+  `age` text,
+  `major` text,
+  `banji` int(11) DEFAULT NULL,
+  `address` text,
+  `phonenumber` text,
+  `beizhu` text,
+  `password` text,
+  `dormnum` text,
+  `bednum` text,
+  `award` text,
+  `punish` text,
+  PRIMARY KEY (`id`)
+);
+
+-- ----------------------------
+-- Records of student
+-- ----------------------------
+INSERT INTO `student` VALUES ('1000', '张三', '男', '19', '计科', '162', '上海', '15925637846', '学生', '123456', '304', '1', '无', '记过');
+INSERT INTO `student` VALUES ('1001', '李四', '男', '18', '软件工程', '164', '南昌', '14667344366', '学生', '245343', '301', '3', '数学竞赛一等奖', '无');
+INSERT INTO `student` VALUES ('1004', 'xh', '女', '19', '信息安全', '161', '广东', '18138494848', '学生', '1234567', '207', '5', '运动会跳远第一', '无');
+INSERT INTO `student` VALUES ('1007', '王五', '女', '18', '土木工程', '164', '河北', '13545665788', '学生', '13225', '207', '2', '学习积极分子', '无');
+INSERT INTO `student` VALUES ('1008', '张勇', '男', '18', '网络工程', '163', '南昌', '15029389209', '学生', '5436555', '301', '4', '先进班干部', '无');
+INSERT INTO `student` VALUES ('8001716066', '陈永喆', '男', '19', '信息安全', '163', '赣州', '18170874213', '本人', '5252', '305', '2', '物理竞赛一等奖', '无');

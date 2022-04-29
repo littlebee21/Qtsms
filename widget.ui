@@ -13,31 +13,44 @@
   <property name="windowTitle">
    <string>Widget</string>
   </property>
-  <widget class="QLineEdit" name="userNameLineEdit">
+  <widget class="QLabel" name="constLoginLabel">
    <property name="geometry">
     <rect>
      <x>130</x>
-     <y>120</y>
-     <width>161</width>
-     <height>21</height>
+     <y>50</y>
+     <width>48</width>
+     <height>16</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>用户登录</string>
+   </property>
+  </widget>
+  <widget class="QLineEdit" name="userNameLineEdit">
+   <property name="geometry">
+    <rect>
+     <x>100</x>
+     <y>80</y>
+     <width>133</width>
+     <height>20</height>
     </rect>
    </property>
   </widget>
   <widget class="QLineEdit" name="passwordLineEdit">
    <property name="geometry">
     <rect>
-     <x>130</x>
-     <y>160</y>
-     <width>161</width>
-     <height>21</height>
+     <x>100</x>
+     <y>120</y>
+     <width>133</width>
+     <height>20</height>
     </rect>
    </property>
   </widget>
   <widget class="QPushButton" name="loginPushButton">
    <property name="geometry">
     <rect>
-     <x>220</x>
-     <y>230</y>
+     <x>120</x>
+     <y>170</y>
      <width>75</width>
      <height>23</height>
     </rect>
@@ -49,9 +62,9 @@
   <widget class="QLabel" name="loginResultLabel">
    <property name="geometry">
     <rect>
-     <x>30</x>
-     <y>300</y>
-     <width>81</width>
+     <x>20</x>
+     <y>270</y>
+     <width>54</width>
      <height>16</height>
     </rect>
    </property>
@@ -59,25 +72,12 @@
     <string>TextLabel</string>
    </property>
   </widget>
-  <widget class="QLabel" name="constLoginLabel">
-   <property name="geometry">
-    <rect>
-     <x>180</x>
-     <y>90</y>
-     <width>54</width>
-     <height>12</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>用户登录</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="initDataBasePushButton">
    <property name="geometry">
     <rect>
-     <x>304</x>
-     <y>290</y>
-     <width>111</width>
+     <x>240</x>
+     <y>270</y>
+     <width>80</width>
      <height>23</height>
     </rect>
    </property>
