@@ -5,7 +5,7 @@
 #include <QSqlDatabase>
 #include <QSqlError>
 #include <QSqlQuery>
-#include <QSqlQueryModel>
+#include <QStandardItemModel>
 
 
 //数据库驱动类
@@ -26,7 +26,7 @@ public:
     int updateSql(); //更新数据
     int insertSql(); //新增数据
     int delelateSql(); //删除数据
-    QSqlQueryModel searchSql(QString sqlCommand);   //搜索数据
+    QList<QList<QString>> searchSql(QString sqlCommand);   //搜索数据
 
 public slots:
     int insertFakeData();//插入假数据

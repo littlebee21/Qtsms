@@ -94,14 +94,15 @@ int MyDataBase::executeSqlFile(const char *sqlFilePath)
 }
 
 //查找数据
-//todo 查找数据的返回值是
-QSqlQueryModel MyDataBase::searchSql(QString sqlCommand)
+//todo 查找数据的返回值是 standarditem list 类型，提供给表格使用
+QList<QList<QString>> MyDataBase::searchSql(QString sqlCommand)
 {
-    QSqlQueryModel sqlQueryModel;
+    QList<QString> listTemp;
+    QList<QList<QString>> listResult;
     openDataBase();
 
     QSqlQuery sql_query;
-    QString select_all_sql = "select * from student";
+    QString select_all_sql = sqlCommand;
     sql_query.prepare(select_all_sql);
     if(!sql_query.exec())
     {
@@ -111,15 +112,27 @@ QSqlQueryModel MyDataBase::searchSql(QString sqlCommand)
     {
         while(sql_query.next())
         {
-            int id = sql_query.value(0).toInt();
+            //int id = sql_query.value(0).toInt();
+            //int age = sql_query.value(2).toInt();
+            //test begin
+            QString id = sql_query.value(0).toString();
             QString name = sql_query.value(1).toString();
-            int age = sql_query.value(2).toInt();
-            qDebug()<<QString("id:%1    name:%2    age:%3").arg(id).arg(name).arg(age);
-
+            QString age = sql_query.value(2).toString();
+            //test end
+            foreach(auto item,listTemp)
+            {
+                listTemp.removeOne(item);
+                qDebug()<<"qlist.size()="<<listTemp.size();
+            }
+            listTemp.append(sql_query.value(0).toString());
+            listTemp.append(sql_query.value(1).toString());
+            listTemp.append(sql_query.value(2).toString());
+            qDebug()<<QString("id:%1    name:%2    age:%3").arg(id).arg(name).arg(age) << "print in database";
+            listResult.append(listTemp);
         }
     }
-
     closeDataBase();
+    return listResult;
 }
 
 //插入假的数据

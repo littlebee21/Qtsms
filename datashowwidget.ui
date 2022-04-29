@@ -52,7 +52,7 @@
     <string>删除数据</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="insertPushButton_2">
+  <widget class="QPushButton" name="selectPushButton">
    <property name="geometry">
     <rect>
      <x>270</x>
@@ -62,7 +62,7 @@
     </rect>
    </property>
    <property name="text">
-    <string>新增数据</string>
+    <string>查找数据</string>
    </property>
   </widget>
   <widget class="QPushButton" name="modifyPushButton">
