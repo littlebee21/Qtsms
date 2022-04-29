@@ -93,8 +93,62 @@ int MyDataBase::executeSqlFile(const char *sqlFilePath)
       return iRet;
 }
 
+
+//修改数据
+int MyDataBase::updateSql(QString sqlCommand)
+{
+    QSqlQuery sql_query;
+    QString update_sql = sqlCommand;
+    if(!sql_query.exec())
+    {
+        qDebug() << sql_query.lastError();
+        return -1;
+    }
+    else
+    {
+        qDebug() << "updated ok";
+        return 0;
+    }
+}
+
+//插入数据
+int MyDataBase::insertSql(QString sqlCommand)
+{
+    QSqlQuery sql_query;
+    QString insert_sql = sqlCommand;
+    sql_query.prepare(insert_sql);
+    if(!sql_query.exec())
+    {
+        qDebug() << sql_query.lastError();
+        return -1;
+    }
+    else
+    {
+        qDebug() << "inserted ok!";
+        return 0;
+    }
+}
+
+//删除数据
+int MyDataBase::delelateSql(QString sqlCommand)
+{
+    QSqlQuery sql_query;
+    QString delete_sql = sqlCommand;
+    sql_query.prepare(delete_sql);
+    sql_query.addBindValue(0);
+    if(!sql_query.exec())
+    {
+        qDebug()<<sql_query.lastError();
+        return -1;
+    }
+    else
+    {
+        qDebug()<<"deleted ok";
+        return 0;
+    }
+}
+
 //查找数据
-//todo 查找数据的返回值是 standarditem list 类型，提供给表格使用
 QList<QList<QString>> MyDataBase::searchSql(QString sqlCommand)
 {
     QList<QString> listTemp;
@@ -166,20 +220,20 @@ bool MyDataBase::openDataBase()
     }
 }
 
-
-////操作数据库  todo
-//int MyDataBase::operateDataBase(QString sqlcommand)
-//{
-//    QSqlQuery sql_query;
-//    //QString create_sql = "create table student (id int primary key, name varchar(30), age int)";
-//    sql_query.prepare(sqlcommand);
-//    if(!sql_query.exec())
-//    {
-//        //todo
-//    }
-//    else
-//    {
-//        qDebug() << "Table created!";
-//    }
-//}
+//操作数据
+int MyDataBase::operateDataBase(QString sqlcommand)
+{
+    QSqlQuery sql_query;
+    sql_query.prepare(sqlcommand);
+    if(!sql_query.exec())
+    {
+        qDebug() << "sql command fail";
+        return -1;
+    }
+    else
+    {
+        qDebug() << "sql command created!";
+        return 0;
+    }
+}
 

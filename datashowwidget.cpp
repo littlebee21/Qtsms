@@ -17,44 +17,85 @@ DataShowWidget::DataShowWidget(QWidget *parent) :
 
     //设置comboBox
     ui->tableNameComboBox->addItem("student");
-    ui->tableNameComboBox->addItem("teacher");
+    ui->tableNameComboBox->addItem("class");
     ui->tableNameComboBox->addItem("admin");
+
+    //设置button
+    //connect()
+
+    //设置tableview
+    pmodel = new QStandardItemModel[10];
+    showAllTable(pmodel,10);
+
+    //槽
+    //combox切换页面
     connect(ui->tableNameComboBox,&QComboBox::currentTextChanged,
             this,&DataShowWidget::comboxActiveSlots);
 
-    //设置button
-    //connect(ui->insertPushButton)
+    //测试
     connect(ui->selectPushButton,&QAbstractButton::clicked,
-            this,&DataShowWidget::testfunction);//获取学生表格的数据 将查找按钮先作为测试按钮
+            this,&DataShowWidget::testfunction);
 
-
-    //设置tableview
-    showAllTable();
-
-    QStandardItemModel* model1 = new QStandardItemModel();
-    QStringList labels1 = QObject::trUtf8("频率1,功率1,误差1").simplified().split(",");
-    model1->setHorizontalHeaderLabels(labels1);
-    ui->teacherTableView->setModel(model1);
-
-    //connect(ui->tableNameComboBox,&QComboBox::activated(0)
+    //点击查找按钮，查看所有的数据库表
+    connect(ui->selectPushButton,&QAbstractButton::clicked,
+            this,&DataShowWidget::showAllTable);
 
 }
 
 DataShowWidget::~DataShowWidget()
 {
+    delete [] pmodel;
     delete ui;
 }
 
-//显示表的信息
-void DataShowWidget::showAllTable()
+//view让stackwidget切换到对应的页面
+void DataShowWidget::comboxActiveSlots()
+{
+    int i = 0;
+    i = ui->tableNameComboBox->currentIndex();
+    qDebug() << i << "is the current combox index";
+    ui->stackedWidget->setCurrentIndex(i);
+    qDebug() << ui->stackedWidget->currentIndex()<< "is the current stackWidgetIndex";
+}
+
+
+//view显示表的信息
+void DataShowWidget::showAllTable(QStandardItemModel *pmodel,
+                                  int length)
 {
     QList<QList<QString>> returnData;
     returnData = getStudentModel();
 
-    QStandardItemModel* model = new QStandardItemModel();
-    QStringList labels = QObject::trUtf8("id,name,age").simplified().split(",");
-    model->setHorizontalHeaderLabels(labels);
+    buildModelHead(pmodel,"student");
+    buildModel(pmodel,returnData);
+    ui->stuTableView->setModel(pmodel);
 
+    returnData = getClassModel();
+    buildModelHead(pmodel+1,"class");
+    buildModel(pmodel+1,returnData);
+    ui->teacherTableView->setModel(pmodel+1);
+}
+
+
+
+//view构建数据模型头
+QStandardItemModel *DataShowWidget::buildModelHead(QStandardItemModel *pmodel,
+                                                   QString tableName)
+{   QStringList labels;
+    if(tableName == "student")
+    labels = QObject::trUtf8("id,name,age").simplified().split(",");
+    if(tableName == "class")
+    labels = QObject::trUtf8("id,object,teacher").simplified().split(",");
+
+    pmodel->setHorizontalHeaderLabels(labels);
+    return pmodel;
+}
+
+
+//view构建数据模型：
+QStandardItemModel *DataShowWidget::buildModel(QStandardItemModel *pmodel,
+                                               QList<QList<QString>> returnData)
+{
     //定义item
     int i = 0;
     int j = 0;
@@ -66,24 +107,43 @@ void DataShowWidget::showAllTable()
         j = 0;
         for(jor=ior->begin();jor !=ior->end();jor++,j++){
             item = new QStandardItem(*jor);
-            model->setItem(i,j,item);
-            qDebug() << "j number is" << j;
+            pmodel->setItem(i,j,item);
+            //qDebug() << "j number is" << j;
         }
-        qDebug() << "i number is" << i;
+        //qDebug() << "i number is" << i;
     }
-    ui->stuTableView->setModel(model);
-    //ui->teacherTableView->setModel(model);
+    return pmodel;
 }
 
 
 
-//查找学生数据
+
+
+
+//service查找class数据
+QList<QList<QString> > DataShowWidget::getClassModel()
+{
+    return pmyDataBase->searchSql("select * from class");
+}
+
+
+
+//service查找学生数据
 QList<QList<QString> > DataShowWidget::getStudentModel()
 {
-    QList<QList<QString>> returnData;
-    returnData = pmyDataBase->searchSql("select * from student");
-    qDebug() << returnData << "in sql serive";
-    return returnData;
+    return pmyDataBase->searchSql("select * from student");
+}
+
+//serive删除学生数据
+int DataShowWidget::deletateStudentModel()
+{
+    return
+}
+
+//serive插入学生数据
+int DataShowWidget::insertStudentModel()
+{
+
 }
 
 
@@ -94,12 +154,4 @@ void DataShowWidget::testfunction()
 }
 
 
-void DataShowWidget::comboxActiveSlots()
-{
-    //让stackwidget切换到对应的页面
-    int i = 0;
-    i = ui->tableNameComboBox->currentIndex();
-    qDebug() << i << "is the current combox index";
-    ui->stackedWidget->setCurrentIndex(i);
-    qDebug() << ui->stackedWidget->currentIndex()<< "is the current stackWidgetIndex";
-}
+
