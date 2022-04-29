@@ -16,12 +16,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 #DEFINES += QT_DISABLE_DEPRECATED_BEFORE=0x060000    # disables all the APIs deprecated before Qt 6.0.0
 
 SOURCES += \
+    datashowservice.cpp \
     datashowwidget.cpp \
     main.cpp \
     mydatabase.cpp \
     widget.cpp
 
 HEADERS += \
+    datashowservice.h \
     datashowwidget.h \
     mydatabase.h \
     widget.h

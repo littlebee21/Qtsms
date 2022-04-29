@@ -13,7 +13,7 @@ DataShowWidget::DataShowWidget(QWidget *parent) :
 {
     ui->setupUi(this);
     //数据库设置
-    pmyDataBase = MyDataBase::getInstance();
+    pDataShowService = new DataShowService;
 
     //设置comboBox
     ui->tableNameComboBox->addItem("student");
@@ -37,9 +37,8 @@ DataShowWidget::DataShowWidget(QWidget *parent) :
             this,&DataShowWidget::testfunction);
 
     //点击查找按钮，查看所有的数据库表
-    connect(ui->selectPushButton,&QAbstractButton::clicked,
-            this,&DataShowWidget::showAllTable);
-
+    //connect(ui->selectPushButton,&QAbstractButton::clicked,
+    //            this,&DataShowWidget::showAllTable);
 }
 
 DataShowWidget::~DataShowWidget()
@@ -59,18 +58,18 @@ void DataShowWidget::comboxActiveSlots()
 }
 
 
-//view显示表的信息
+//显示表的信息
 void DataShowWidget::showAllTable(QStandardItemModel *pmodel,
                                   int length)
 {
     QList<QList<QString>> returnData;
-    returnData = getStudentModel();
+    returnData = pDataShowService->getStudentModel();
 
     buildModelHead(pmodel,"student");
     buildModel(pmodel,returnData);
     ui->stuTableView->setModel(pmodel);
 
-    returnData = getClassModel();
+    returnData = pDataShowService->getClassModel();
     buildModelHead(pmodel+1,"class");
     buildModel(pmodel+1,returnData);
     ui->teacherTableView->setModel(pmodel+1);
@@ -78,7 +77,7 @@ void DataShowWidget::showAllTable(QStandardItemModel *pmodel,
 
 
 
-//view构建数据模型头
+//构建数据模型头
 QStandardItemModel *DataShowWidget::buildModelHead(QStandardItemModel *pmodel,
                                                    QString tableName)
 {   QStringList labels;
@@ -113,37 +112,6 @@ QStandardItemModel *DataShowWidget::buildModel(QStandardItemModel *pmodel,
         //qDebug() << "i number is" << i;
     }
     return pmodel;
-}
-
-
-
-
-
-
-//service查找class数据
-QList<QList<QString> > DataShowWidget::getClassModel()
-{
-    return pmyDataBase->searchSql("select * from class");
-}
-
-
-
-//service查找学生数据
-QList<QList<QString> > DataShowWidget::getStudentModel()
-{
-    return pmyDataBase->searchSql("select * from student");
-}
-
-//serive删除学生数据
-int DataShowWidget::deletateStudentModel()
-{
-    return
-}
-
-//serive插入学生数据
-int DataShowWidget::insertStudentModel()
-{
-
 }
 
 
