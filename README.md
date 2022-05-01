@@ -41,10 +41,12 @@
 
   (1), insert   插入,  只能通过id修改进行插入，由于insert语句过长，所以默认写死在代码中，通过修改id进行插入
 ![](image/README/1651378586181.png)
+
   (2), deletale  删除  只能通过id进行删除
 ![](image/README/1651378604863.png)
 
   (3), select  查找    未封装单行查询，  只封装了全表查询
+
   (4), update  修改    只能修改name
 
 #### 2, 数据库表
