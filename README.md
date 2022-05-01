@@ -20,6 +20,7 @@
 ### 项目使用：
 
 1,第一次使用，可能需要点击login页面的initbase，进行数据库的初始化
+
 2,登录账号gao  密码123,   账号密码耦合在代码中
 
 ### 实现功能详细说明
@@ -52,6 +53,7 @@
 #### 2, 数据库表
 
   (1), 只设计了三个表头，只显示三列数据
+
   (2), 使用stackwidget的方式，通过combox进行切换表格
 
 ### 使用其他元素
@@ -61,21 +63,27 @@
 ### 项目设计
 
 1,设计架构：
-  使用三层，view,   视图操作 eg； datashowwidget.cpp  widget.cpp
-            service, 业务操作  eg: datashowservice.cpp
-            model   数据库操作  eg: mydatabase.cpp
-![](image/README/1651378139730.png)
+  使用三层，
+
+view,   视图操作 eg； datashowwidget.cpp  widget.cpp
+
+service, 业务操作  eg: datashowservice.cpp
+
+model   数据库操作  eg: mydatabase.cpp
+![img](image/README/1651378139730.png)
   进行函数的分层编写，分离功能
 
 ### 项目后期补足点:
 
 1, 从数据库表中查找账号密码
+
 2，增加多个表的显示，实现方法
-![](image/README/1651378071625.png)
+![img](image/README/1651378071625.png)
 我创建了10个pmodel，所以是10个表，想要对第二个表进行操作，
 就可以使用pmodel + 1的方式进行使用
 
 ### 项目注意点
 
-  1,sql语句往往在拼接过程中涉及 '等标点符号的遗忘问题，建议qDebug的方式进行调试
-  2，项目中的qDebug调试语句没有删除，如果不想要，可以全局查找进行删除
+1,sql语句往往在拼接过程中涉及 '等标点符号的遗忘问题，建议qDebug的方式进行调试
+
+2，项目中的qDebug调试语句没有删除，如果不想要，可以全局查找进行删除
