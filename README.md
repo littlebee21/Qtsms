@@ -39,13 +39,13 @@
 
 #### 2，数据库增删改查界面
 
-  (1), insert   插入,  只能通过id修改进行插入，由于insert语句过长，所以默认写死在代码中，通过修改id进行插入![](image/README/1651378586181.png)
+  (1), insert   插入,  只能通过id修改进行插入，由于insert语句过长，所以默认写死在代码中，通过修改id进行插入
+![](image/README/1651378586181.png)
   (2), deletale  删除  只能通过id进行删除
 ![](image/README/1651378604863.png)
+
   (3), select  查找    未封装单行查询，  只封装了全表查询
   (4), update  修改    只能修改name
-
-<pre class="vditor-reset" placeholder="" contenteditable="true" spellcheck="false"><p data-block="0"><img src="https://file+.vscode-resource.vscode-webview.net/e%3A/qtSsmAll/Qtdssm/image/README/1651378000432.png" alt=""/></p><p data-block="0"><img src="https://file+.vscode-resource.vscode-webview.net/e%3A/qtSsmAll/Qtdssm/image/README/1651378015223.png" alt=""/></p></pre>
 
 #### 2, 数据库表
 
