@@ -99,6 +99,8 @@ int MyDataBase::updateSql(QString sqlCommand)
 {
     QSqlQuery sql_query;
     QString update_sql = sqlCommand;
+    openDataBase();
+    sql_query.prepare(update_sql);
     if(!sql_query.exec())
     {
         qDebug() << sql_query.lastError();
@@ -109,6 +111,7 @@ int MyDataBase::updateSql(QString sqlCommand)
         qDebug() << "updated ok";
         return 0;
     }
+     closeDataBase();
 }
 
 //插入数据
@@ -116,10 +119,11 @@ int MyDataBase::insertSql(QString sqlCommand)
 {
     QSqlQuery sql_query;
     QString insert_sql = sqlCommand;
+    openDataBase();
     sql_query.prepare(insert_sql);
     if(!sql_query.exec())
     {
-        qDebug() << sql_query.lastError();
+        qDebug() << sql_query.lastError()<< "############";
         return -1;
     }
     else
@@ -127,6 +131,7 @@ int MyDataBase::insertSql(QString sqlCommand)
         qDebug() << "inserted ok!";
         return 0;
     }
+    closeDataBase();
 }
 
 //删除数据
@@ -134,8 +139,8 @@ int MyDataBase::delelateSql(QString sqlCommand)
 {
     QSqlQuery sql_query;
     QString delete_sql = sqlCommand;
+    openDataBase();
     sql_query.prepare(delete_sql);
-    sql_query.addBindValue(0);
     if(!sql_query.exec())
     {
         qDebug()<<sql_query.lastError();
@@ -146,6 +151,7 @@ int MyDataBase::delelateSql(QString sqlCommand)
         qDebug()<<"deleted ok";
         return 0;
     }
+    closeDataBase();
 }
 
 //查找数据

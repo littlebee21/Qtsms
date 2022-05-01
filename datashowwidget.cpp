@@ -6,7 +6,6 @@
 #include "QStandardItem"
 
 
-
 DataShowWidget::DataShowWidget(QWidget *parent) :
     QWidget(parent),
     ui(new Ui::DataShowWidget)
@@ -21,7 +20,6 @@ DataShowWidget::DataShowWidget(QWidget *parent) :
     ui->tableNameComboBox->addItem("admin");
 
     //设置button
-    //connect()
 
     //设置tableview
     pmodel = new QStandardItemModel[10];
@@ -38,7 +36,13 @@ DataShowWidget::DataShowWidget(QWidget *parent) :
 
     //点击查找按钮，查看所有的数据库表
     //connect(ui->selectPushButton,&QAbstractButton::clicked,
-    //            this,&DataShowWidget::showAllTable);
+     //           this,&DataShowWidget::showAllTable);
+    connect(ui->deletatePushButton,&QAbstractButton::clicked,
+                    this,&DataShowWidget::deletateStudentModelById);
+    connect(ui->insertPushButton,&QAbstractButton::clicked,
+            this,&DataShowWidget::insertStudentModel);
+    connect(ui->modifyPushButton,&QAbstractButton::clicked,
+            this,&DataShowWidget::updateStudendNameModelById);
 }
 
 DataShowWidget::~DataShowWidget()
@@ -64,6 +68,7 @@ void DataShowWidget::showAllTable(QStandardItemModel *pmodel,
 {
     QList<QList<QString>> returnData;
     returnData = pDataShowService->getStudentModel();
+    qDebug() << returnData << "in showAll table in widget";
 
     buildModelHead(pmodel,"student");
     buildModel(pmodel,returnData);
@@ -75,6 +80,18 @@ void DataShowWidget::showAllTable(QStandardItemModel *pmodel,
     ui->teacherTableView->setModel(pmodel+1);
 }
 
+//显示学生表信息
+void DataShowWidget::showStuTable(QStandardItemModel *pmodel)
+{
+    QList<QList<QString>> returnData;
+    returnData = pDataShowService->getStudentModel();
+    qDebug() << returnData << "in showStuTable in widget";
+    pmodel->clear();
+    buildModelHead(pmodel,"student");
+    buildModel(pmodel,returnData);
+    ui->stuTableView->setModel(pmodel);
+}
+
 
 
 //构建数据模型头
@@ -82,7 +99,7 @@ QStandardItemModel *DataShowWidget::buildModelHead(QStandardItemModel *pmodel,
                                                    QString tableName)
 {   QStringList labels;
     if(tableName == "student")
-    labels = QObject::trUtf8("id,name,age").simplified().split(",");
+    labels = QObject::trUtf8("id,name,sex").simplified().split(",");
     if(tableName == "class")
     labels = QObject::trUtf8("id,object,teacher").simplified().split(",");
 
@@ -114,11 +131,50 @@ QStandardItemModel *DataShowWidget::buildModel(QStandardItemModel *pmodel,
     return pmodel;
 }
 
+//通过id删除数据
+void DataShowWidget::deletateStudentModelById()
+{
+    int id = 0;
+    int result;
+    if(!ui->idLineEdit->text().isEmpty()){
+        id = ui->idLineEdit->text().toInt();
+    }
+    result = pDataShowService->deletateStudentModelById(id);
+    if(result != 0){
+        qDebug() << "deletale fail in delete service";
+    }
+    showStuTable(pmodel);
+}
+
+//更新数据byid
+void DataShowWidget::updateStudendNameModelById()
+{
+    int id;
+    QString name;
+    id =ui->idLineEdit->text().toInt();
+    name = ui->arg2lineEdit->text();
+    int result;
+    qDebug() << name << id << "in model";
+    result = pDataShowService->updateStudendNameModelById(id,name);
+    showStuTable(pmodel);
+}
+
+//插入函数
+void DataShowWidget::insertStudentModel()
+{
+    int result;
+    QList<QString> list;
+    list.append(ui->idLineEdit->text());
+    list.append(ui->arg2lineEdit->text());
+    list.append(ui->arg3lineEdit->text());
+    result = pDataShowService->insertStudentModel(list);
+    showStuTable(pmodel);
+}
+
 
 //测试功能按键
 void DataShowWidget::testfunction()
 {
-
 }
 
 
